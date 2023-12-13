@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 DELETE FROM `accounts`;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
 INSERT INTO `accounts` (`Id`, `Username`, `Nickname`, `Password`, `Salt`, `SecurityLevel`) VALUES
-	(1, 'Ambiente', 'Ambiente', 'Ambiente', 'DYthMjTuBhayFQM0T2v2b80Pk+xg1TK5', 2),
-	(2, '1234', NULL, 'BgrPItil7iBkeRezzNR+hh2w0nHAiC27', 'kJFdITnXxnhVhsYzWrW8BeVcW/ALxB2E', 0),
-	(3, 'Test1234', NULL, 'hevYgOV2BetpyhI3/U000kQUj6IlmhDY', '7iUnlbnCZTJ0k1929Rf4rAygThdWaJ/+', 0);
+	(1, 'Ambiente', 'Ambiente', 'Ambiente', '', 2),
+	(2, '1234', NULL, 'BgrPItil7iBkeRe+hh2w0nHAiC27', '', 0),
+	(3, 'Test1234', NULL, 'hevYgOV2Bet/U000kQUj6IlmhDY', '7aJ/+', 0);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 
 -- Exportiere Struktur von Tabelle s4l.bans
