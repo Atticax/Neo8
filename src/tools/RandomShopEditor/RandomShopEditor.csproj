@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>NET472</TargetFramework>
+		<EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+		<Copyright>Marinov</Copyright>
+		<PackageIcon></PackageIcon>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Custom\**" />
+	  <None Remove="Custom\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="BlubLib.GUI" Version="0.1.20" />
+		<PackageReference Include="Costura.Fody" Version="3.1.6" />
+		<PackageReference Include="Magick.NET-Q16-HDRI-AnyCPU" Version="7.9.0.2" />
+		<!--<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-27124-01" />-->
+		<PackageReference Include="ReactiveProperty" Version="5.4.0" />
+		<PackageReference Include="Valit" Version="1.0.0" />
+		<Reference Include="BlubLib.GUI">
+		  <HintPath>..\..\..\..\..\..\..\..\.nuget\packages\blublib.gui\0.1.20\lib\net461\BlubLib.GUI.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Windows.Forms" />
+		<ProjectReference Include="..\..\Netsphere.Database\Netsphere.Database.csproj" />
+		<ProjectReference Include="..\..\Netsphere.Resource\Netsphere.Resource.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Forms\PeriodUI.resx" />
+		<EmbeddedResource Include="Forms\PopupUI.resx" />
+		<EmbeddedResource Include="Forms\ShowPriceUI.resx" />
+		<EmbeddedResource Include="Forms\ShowItemUI.resx" />
+		<EmbeddedResource Include="Forms\ItemsUI.resx" />
+		<EmbeddedResource Include="Forms\MainMenuUI.resx" />
+		<EmbeddedResource Include="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+		<Compile Update="Forms\PopupUI.cs">
+		  <SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\ShowPriceUI.cs">
+		  <SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\ShowItemUI.cs">
+		  <SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\ItemsUI.cs">
+		  <SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Properties\Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
+		<None Include="Properties\Settings.settings" Generator="SettingsSingleFileGenerator" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="FodyWeavers.xml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="FodyWeavers.xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Forms\LineupUI.resx" />
+		<EmbeddedResource Include="Forms\PackageUI.resx" />
+	</ItemGroup>
+	<!--<ItemGroup>-->
+	<!--<TrimFilesRootFiles Include="mscorlib.dll" />-->
+	<!--<RdXmlFile Include="rd.xml" />-->
+	<!--<LinkerArg Include="-no-pie" />-->
+	<!--</ItemGroup>-->
+	<!--<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">-->
+	<!--<IlcArg Include="&#45;&#45;stacktracedata" />-->
+	<!--</ItemGroup>-->
+	  <Import Project="..\SharpLzo.targets" />
+	<Import Project="..\..\..\Rules.targets" />
+</Project>
