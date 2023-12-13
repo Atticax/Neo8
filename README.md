@@ -14,6 +14,5 @@ Features :
 - Missions / todo
 - Combination 
 - Decombination
-- Esper-Skill / maybe adding later
 - Randomshop
 - Chaser,BattleRoyal,DeathMatch,Touchdown,Captain
