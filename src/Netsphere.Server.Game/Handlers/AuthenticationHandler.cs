@@ -218,7 +218,7 @@ namespace Netsphere.Server.Game.Handlers
                         Enable = 1,
                         Unk2 = 0,
                         Unk3 = 0,
-                        NameTagId = (int) session.Player.Nametag,
+                        NameTagId = (int)session.Player.Nametag,
                         EffectId = 0,
                         EffectId2 = 0,
                         PeriodType = "NONE",

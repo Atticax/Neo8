@@ -124,16 +124,17 @@ namespace Netsphere.Server.Game.Services
             LoadDefaultItems();
             LoadGameTempos();
             LoadEquipLimits();
+            LoadOneTimeCharges();
+            LoadCardGumble();
+            LoadEnchantData();
+            LoadEnchantSystem();
+            LoadCombinationInfo();
+            LoadDecompositionInfo();
+            LoadTutorials();
             await LoadShop();
             await LoadRandomShop();
             await LoadLevelRewards();
-            //LoadOneTimeCharges();
-            LoadCardGumble();
-            //LoadEnchantData();
-            //LoadEnchantSystem();
-            //LoadCombinationInfo();
-            LoadDecompositionInfo();
-            //LoadTutorials();
+
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

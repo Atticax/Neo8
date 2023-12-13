@@ -135,7 +135,7 @@ namespace Netsphere.Server.Game.Services
             var actionsDto = Deserialize<ActionListDto>("xml/action.x7");
             var stringTable = Deserialize<StringTableDto>("language/xml/iteminfo_string_table.x7");
 
-            
+
             var items = Transform().ToArray();
             var dict = new Dictionary<ItemNumber, ItemInfo>();
             foreach (var item in items)
@@ -415,48 +415,48 @@ namespace Netsphere.Server.Game.Services
             }
         }
 
-        //public void LoadOneTimeCharges()
-        //{
-        //    _logger.Information("Loading onetimecharges...");
-        //    var dto = Deserialize<OneTimeChargeListDto>("xml/_eu_onetimecharge.x7");
-        //    OneTimeCharges = ImmutableDictionary.ToImmutableDictionary(Transform(), (x => x.ItemKey), (x => x));
-        //    _logger.Information("Loaded {Count} onetimecharges", OneTimeCharges.Count);
+        public void LoadOneTimeCharges()
+        {
+            _logger.Information("Loading onetimecharges...");
+            var dto = Deserialize<OneTimeChargeListDto>("xml/_eu_onetimecharge.x7");
+            OneTimeCharges = ImmutableDictionary.ToImmutableDictionary(Transform(), (x => x.ItemKey), (x => x));
+            _logger.Information("Loaded {Count} onetimecharges", OneTimeCharges.Count);
 
-        //    IEnumerable<OneTimeCharge> Transform()
-        //    {
-        //        var oneTimeChargeDtoArray = dto.OneTimeChargeDtos;
-        //        for (int index = 0; index < oneTimeChargeDtoArray.Length; index++)
-        //        {
-        //            var oneTimeChargeDto = oneTimeChargeDtoArray[index];
-        //            yield return new OneTimeCharge()
-        //            {
-        //                ItemKey = (ItemNumber)oneTimeChargeDto.item_key,
-        //                OneTimeChargeCategories = ((IEnumerable<OneTimeChargeCategoryDto>)oneTimeChargeDto.OneTimeChargeCategory).Select(x => new OneTimeChargeCategory()
-        //                {
-        //                    Type = (CapsuleRewardType)x.type,
-        //                    OneTimeChargeSubCategories = ((IEnumerable<OneTimeChargeSubCategoryDto>)x.OneTimeChargeSubCategory).Select(y => new OneTimeChargeSubCategory()
-        //                    {
-        //                        Aleatory = y != null && y.aleatory,
-        //                        UniqueBoost = y != null && y.unique_boost,
-        //                        OneTimeChargeItems = ((IEnumerable<OneTimeChargeItemDto>)y.OneTimeChargeItem).Select(z => new OneTimeChargeItem()
-        //                        {
-        //                            Key = z != null ? z.key : 0,
-        //                            PreviewEffect = z != null ? z.previewEffect : 0,
-        //                            PriceType = z.priceType >= 1 ? (ItemPriceType)z.priceType : ItemPriceType.Premium,
-        //                            PeriodType = z.periodType >= 1 ? (ItemPeriodType)z.periodType : ItemPeriodType.None,
-        //                            Period = z != null ? z.period : (ushort)0,
-        //                            Color = z != null ? z.color : 0,
-        //                            Amount = z != null ? z.amount : 0,
-        //                            BoostKey = z != null ? z.boostKey : 0
-        //                            //Rate = z.rate
-        //                        }).ToList()
-        //                    }).ToList()
-        //                }).ToList()
-        //            };
-        //        }
-        //        oneTimeChargeDtoArray = null;
-        //    }
-        //}
+            IEnumerable<OneTimeCharge> Transform()
+            {
+                var oneTimeChargeDtoArray = dto.OneTimeChargeDtos;
+                for (int index = 0; index < oneTimeChargeDtoArray.Length; index++)
+                {
+                    var oneTimeChargeDto = oneTimeChargeDtoArray[index];
+                    yield return new OneTimeCharge()
+                    {
+                        ItemKey = (ItemNumber)oneTimeChargeDto.item_key,
+                        OneTimeChargeCategories = ((IEnumerable<OneTimeChargeCategoryDto>)oneTimeChargeDto.OneTimeChargeCategory).Select(x => new OneTimeChargeCategory()
+                        {
+                            Type = (CapsuleRewardType)x.type,
+                            OneTimeChargeSubCategories = ((IEnumerable<OneTimeChargeSubCategoryDto>)x.OneTimeChargeSubCategory).Select(y => new OneTimeChargeSubCategory()
+                            {
+                                Aleatory = y != null && y.aleatory,
+                                UniqueBoost = y != null && y.unique_boost,
+                                OneTimeChargeItems = ((IEnumerable<OneTimeChargeItemDto>)y.OneTimeChargeItem).Select(z => new OneTimeChargeItem()
+                                {
+                                    Key = z != null ? z.key : 0,
+                                    PreviewEffect = z != null ? z.previewEffect : 0,
+                                    PriceType = z.priceType >= 1 ? (ItemPriceType)z.priceType : ItemPriceType.Premium,
+                                    PeriodType = z.periodType >= 1 ? (ItemPeriodType)z.periodType : ItemPeriodType.None,
+                                    Period = z != null ? z.period : (ushort)0,
+                                    Color = z != null ? z.color : 0,
+                                    Amount = z != null ? z.amount : 0,
+                                    BoostKey = z != null ? z.boostKey : 0
+                                    //Rate = z.rate
+                                }).ToList()
+                            }).ToList()
+                        }).ToList()
+                    };
+                }
+                oneTimeChargeDtoArray = null;
+            }
+        }
 
         public void LoadCardGumble()
         {
@@ -506,89 +506,89 @@ namespace Netsphere.Server.Game.Services
             }
         }
 
-        //public void LoadEnchantData()
-        //{
-        //    _logger.Information("Loading enchantdata...");
-        //    var dto = Deserialize<EnchantDataDto>("xml/enchant_data.x7");
-        //    EnchantData = Transform();
-        //    _logger.Information("Loaded {Count} mastery", EnchantData.MasteryNeed.Count);
-        //    _logger.Information("Loaded {Count} price", EnchantData.PriceNeed.Count);
+        public void LoadEnchantData()
+        {
+            _logger.Information("Loading enchantdata...");
+            var dto = Deserialize<EnchantDataDto>("xml/enchant_data.x7");
+            EnchantData = Transform();
+            _logger.Information("Loaded {Count} mastery", EnchantData.MasteryNeed.Count);
+            _logger.Information("Loaded {Count} price", EnchantData.PriceNeed.Count);
 
-        //    EnchantData Transform()
-        //    {
-        //        EnchantData enchantData = new EnchantData();
-        //        foreach (var data in dto.enchant_config.Datas)
-        //        {
-        //            enchantData.DataDatas.Add(new EnchantDataData()
-        //            {
-        //                Level = data.notice_enchant_cnt,
-        //                MasteryPeerMin = data.mastery_per_min,
-        //                BonusProb = data.bonus_prob,
-        //                Prob = data.prob_unit
-        //            });
-        //        }
+            EnchantData Transform()
+            {
+                EnchantData enchantData = new EnchantData();
+                foreach (var data in dto.enchant_config.Datas)
+                {
+                    enchantData.DataDatas.Add(new EnchantDataData()
+                    {
+                        Level = data.notice_enchant_cnt,
+                        MasteryPeerMin = data.mastery_per_min,
+                        BonusProb = data.bonus_prob,
+                        Prob = data.prob_unit
+                    });
+                }
 
-        //        foreach (var masteryNeedDto in dto.mastery_need_table.MasteryNeedDtos)
-        //        {
-        //            enchantData.MasteryNeed.Add(new EnchantMasteryNeed()
-        //            {
-        //                Level = masteryNeedDto.enchant_cnt,
-        //                ItemCategory = (ItemCategory)Enum.Parse<ItemCategory>(masteryNeedDto.item_type, true),
-        //                Durability = masteryNeedDto.durability
-        //            });
-        //        }
+                foreach (var masteryNeedDto in dto.mastery_need_table.MasteryNeedDtos)
+                {
+                    enchantData.MasteryNeed.Add(new EnchantMasteryNeed()
+                    {
+                        Level = masteryNeedDto.enchant_cnt,
+                        ItemCategory = (ItemCategory)Enum.Parse<ItemCategory>(masteryNeedDto.item_type, true),
+                        Durability = masteryNeedDto.durability
+                    });
+                }
 
-        //        foreach (var enchantPriceDto in dto.enchant_price_table.EnchantPriceDtos)
-        //        {
-        //            enchantData.PriceNeed.Add(new EnchantMasteryNeed()
-        //            {
-        //                Level = enchantPriceDto.enchant_cnt,
-        //                ItemCategory = (ItemCategory)Enum.Parse<ItemCategory>(enchantPriceDto.item_type, true),
-        //                Durability = enchantPriceDto.enchant_price
-        //            });
-        //        }
+                foreach (var enchantPriceDto in dto.enchant_price_table.EnchantPriceDtos)
+                {
+                    enchantData.PriceNeed.Add(new EnchantMasteryNeed()
+                    {
+                        Level = enchantPriceDto.enchant_cnt,
+                        ItemCategory = (ItemCategory)Enum.Parse<ItemCategory>(enchantPriceDto.item_type, true),
+                        Durability = enchantPriceDto.enchant_price
+                    });
+                }
 
-        //        return enchantData;
-        //    }
-        //}
+                return enchantData;
+            }
+        }
 
-        //public void LoadEnchantSystem()
-        //{
-        //    _logger.Information("Loading enchantSystem...");
-        //    var dto = Deserialize<EnchantSystemDto>("xml/_eu_enchant_system.x7");
-        //    Enchant = ImmutableDictionary.ToImmutableDictionary(Transform(), (x => x.Level), (x => x));
-        //    _logger.Information<int>("Loaded {Count} levels", Enchant.Count);
+        public void LoadEnchantSystem()
+        {
+            _logger.Information("Loading enchantSystem...");
+            var dto = Deserialize<EnchantSystemDto>("xml/_eu_enchant_system.x7");
+            Enchant = ImmutableDictionary.ToImmutableDictionary(Transform(), (x => x.Level), (x => x));
+            _logger.Information<int>("Loaded {Count} levels", Enchant.Count);
 
-        //    IEnumerable<EnchantSystem> Transform()
-        //    {
-        //        EnchantDtoDto[] enchantDtoDtoArray = dto.EnchantDtoDtos;
-        //        for (int index = 0; index < enchantDtoDtoArray.Length; ++index)
-        //        {
-        //            EnchantDtoDto e = enchantDtoDtoArray[index];
-        //            foreach (uint num in ((IEnumerable<string>)e.level.Split('|', StringSplitOptions.None)).Select(i => uint.Parse(i)))
-        //            {
-        //                yield return new EnchantSystem()
-        //                {
-        //                    Level = num,
-        //                    EnchantSystemDataItems = ((IEnumerable<EnchantDataItemDto>)e.EnchantDataItemDtos).Select(i => new EnchantSystemDataItem()
-        //                    {
-        //                        ItemCategory = (ItemCategory)i.item_category,
-        //                        ItemSubCategory = i.item_subcategory,
-        //                        EnchantDataEffects = ((IEnumerable<EnchantDataItemEffectDto>)i.EnchantDataItemEffectDtos).Select(eff => new EnchantDataEffect()
-        //                        {
-        //                            Id = eff.id,
-        //                            Prob = eff.prob
-        //                        }).ToList()
-        //                    }).ToList()
-        //                };
-        //            }
+            IEnumerable<EnchantSystem> Transform()
+            {
+                EnchantDtoDto[] enchantDtoDtoArray = dto.EnchantDtoDtos;
+                for (int index = 0; index < enchantDtoDtoArray.Length; ++index)
+                {
+                    EnchantDtoDto e = enchantDtoDtoArray[index];
+                    foreach (uint num in ((IEnumerable<string>)e.level.Split('|', StringSplitOptions.None)).Select(i => uint.Parse(i)))
+                    {
+                        yield return new EnchantSystem()
+                        {
+                            Level = num,
+                            EnchantSystemDataItems = ((IEnumerable<EnchantDataItemDto>)e.EnchantDataItemDtos).Select(i => new EnchantSystemDataItem()
+                            {
+                                ItemCategory = (ItemCategory)i.item_category,
+                                ItemSubCategory = i.item_subcategory,
+                                EnchantDataEffects = ((IEnumerable<EnchantDataItemEffectDto>)i.EnchantDataItemEffectDtos).Select(eff => new EnchantDataEffect()
+                                {
+                                    Id = eff.id,
+                                    Prob = eff.prob
+                                }).ToList()
+                            }).ToList()
+                        };
+                    }
 
-        //            e = (EnchantDtoDto)null;
-        //        }
+                    e = (EnchantDtoDto)null;
+                }
 
-        //        enchantDtoDtoArray = (EnchantDtoDto[])null;
-        //    }
-        //}
+                enchantDtoDtoArray = (EnchantDtoDto[])null;
+            }
+        }
 
         public void LoadCombinationInfo()
         {
