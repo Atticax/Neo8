@@ -1,0 +1,144 @@
+{
+  Network:
+  {
+    Listener: 127.0.0.1:28004
+    WorkerThreads: -1
+    MaxSessions: 100
+  }
+  ServerList:
+  {
+    Id: 1
+    Name: Netsphere
+    Address: 127.0.0.1
+    UpdateInterval: 30000
+  }
+  RelayEndPoint: 127.0.0.1:28005
+  ClientVersions: ["0.8.32.26995"]
+  Database:
+  {
+    ConnectionStrings:
+    {
+      Redis: localhost
+      Auth: Server=localhost;Database=auth;Uid=root;Pwd=1234;SslMode=None;
+      Game: Server=localhost;Database=game;Uid=root;Pwd=1234;SslMode=None;
+    }
+    RunMigration: true
+  }
+  Logging:
+  {
+    Name: game
+    Directory: logs
+    Level: Debug
+  }
+  SaveInterval: 30000
+  Game:
+  {
+    EnableTutorial: true
+    EnableLicenseRequirement: true
+    MaxLevel: 100
+    StartLevel: 0
+    StartPEN: 30000
+    StartAP: 0
+    StartCoins1: 0
+    StartCoins2: 0
+    NickRestrictions:
+    {
+      MinLength: 4
+      MaxLength: 30
+      MaxRepeat: 3
+      WhitespaceAllowed: false
+      AsciiOnly: true
+    }
+    Systems:
+    {
+      EnabledCapsules: true
+      EnabledCards: true
+      EnabledClub: true
+      EnabledEnchant: true
+      EnabledNameTag: true
+      EnabledRandomShop: true
+    }
+    ClanOptions:
+    {
+      NameMinLength: 3
+      NameMaxLength: 40
+      DefaultIcon: 1-1-1
+    }
+    DurabilityLossPerDeath: 0
+    DurabilityLossPerMinute: 0
+    Deathmatch:
+    {
+      ExperienceRates:
+      {
+        ScoreFactor: 0.7
+        FirstPlaceBonus: 50
+        SecondPlaceBonus: 30
+        ThirdPlaceBonus: 10
+        PlayerCountFactor: 0.06
+        ExperiencePerMinute: 20
+      }
+      PointsPerKill: 2
+      PointsPerKillAssist: 1
+      PointsPerHealAssist: 2
+      PointsPerDeath: 0
+    }
+    Touchdown:
+    {
+      ExperienceRates:
+      {
+        ScoreFactor: 0.7
+        FirstPlaceBonus: 50
+        SecondPlaceBonus: 30
+        ThirdPlaceBonus: 10
+        PlayerCountFactor: 0.06
+        ExperiencePerMinute: 20
+      }
+      PointsPerGoal: 10
+      PointsPerGoalAssist: 5
+      PointsPerOffense: 4
+      PointsPerOffenseAssist: 2
+      PointsPerDefense: 4
+      PointsPerDefenseAssist: 2
+      PointsPerFumbi: 2
+      PointsPerKill: 2
+      PointsPerKillAssist: 1
+      PointsPerHealAssist: 2
+      PointsPerDeath: 0
+    }
+    BattleRoyal:
+    {
+      ExperienceRates:
+      {
+        ScoreFactor: 0.7
+        FirstPlaceBonus: 50
+        SecondPlaceBonus: 30
+        ThirdPlaceBonus: 10
+        PlayerCountFactor: 0.06
+        ExperiencePerMinute: 20
+      }
+      PointsPerKill: 2
+      PointsPerKillAssist: 1
+      PointsPerBonusKill: 5
+      PointsPerBonusAssist: 1
+      PointsPerDeath: 0
+    }
+    Captain:
+    {
+      ExperienceRates:
+      {
+        ScoreFactor: 0.7
+        FirstPlaceBonus: 50
+        SecondPlaceBonus: 30
+        ThirdPlaceBonus: 10
+        PlayerCountFactor: 0.06
+        ExperiencePerMinute: 20
+      }
+      PointsPerKill: 2
+      PointsPerKillAssist: 1
+      PointsPerCaptainKill: 5
+      PointsPerRoundWin: 5
+      PointsPerSuicide: -1
+      PointsPerHeal: 1
+    }
+  }
+}

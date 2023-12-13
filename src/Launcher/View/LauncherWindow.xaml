@@ -1,0 +1,48 @@
+﻿<Window
+        x:Class="Launcher.View.LauncherWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Launcher.View"
+        xmlns:helpers="clr-namespace:Launcher.View.Helpers"
+        mc:Ignorable="d"
+        Title="S4 Launcher" Height="600" Width="1100" Visibility="Visible" AllowsTransparency="True"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
+  >
+  <Window.Background>
+		<ImageBrush ImageSource="/Launcher;component/Resources/Images/back.png" Stretch="Uniform"/>
+	</Window.Background>
+	<Grid Margin="70,28,66,26">
+    <Image x:Name="buttonExit" Stretch="Fill" Source="/Launcher;component/Resources/Images/btn_exit.png" HorizontalAlignment="Right" VerticalAlignment="Top" Width="26" Height="26"/>
+		<StackPanel Width="285" HorizontalAlignment="Left" Margin="0,141,0,0">
+			<StackPanel Width="285" Height="102">
+				<StackPanel.Background>
+					<SolidColorBrush Color="#D8000000" Opacity="0.5"></SolidColorBrush>
+				</StackPanel.Background>
+        <TextBox x:Name="textFieldLoginUsername" TabIndex="0" TextWrapping="Wrap" BorderBrush="#D81D1D1D" Foreground="Gold" FontSize="22" Width="267" Height="36" Background="#FF0F0A0D" FontFamily="Arial" Padding="5" Margin="0,10,0,0" />
+        <TextBlock IsHitTestVisible="False" Text="Username" FontSize="22" Padding="6,3,0,0" Foreground="DarkGray" Width="267" Height="36" Margin="0,-36,0,0">
+					<TextBlock.Style>
+						<Style TargetType="{x:Type TextBlock}">
+							<Setter Property="Visibility" Value="Collapsed"/>
+							<Style.Triggers>
+                <DataTrigger Binding="{Binding Text, ElementName=textFieldLoginUsername}" Value="">
+									<Setter Property="Visibility" Value="Visible"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+				<PasswordBox x:Name="passwordFieldLoginPassword" TabIndex="1" Height="36" BorderBrush="#D81D1D1D"  Width="267" Margin="0,10,0,0" Foreground="gold" Background="#FF0F0A0D" FontSize="22" FontFamily="Arial" Padding="5" />
+				<TextBlock x:Name="passwordPlaceholder" IsHitTestVisible="False" Text="Password" FontSize="22" Margin="0,-36,0,0" Padding="6,3,0,0" Foreground="DarkGray" Width="267" Height="36" />
+			</StackPanel>
+      <Image x:Name="buttonLogin" Stretch="Fill" Source="/Launcher;component/Resources/Images/btn_start.png" Height="60" Width="100" Margin="0,20,0,0" />
+			<TextBlock Margin="0,60,20,0" TextAlignment="Right">
+				<Hyperlink NavigateUri="http://s4.yatb.de" helpers:HyperlinkExtensions.IsExternal="True" >
+					No Account? Create one here!
+				</Hyperlink>
+      </TextBlock>
+		</StackPanel>
+		<Label x:Name="lableStatus" Content="-/-" Margin="10,0,0,53" Foreground="#FFFEF7CB" Width="266" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" HorizontalContentAlignment="Left" FontSize="10" />
+	</Grid>
+</Window>

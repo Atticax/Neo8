@@ -1,0 +1,15 @@
+{
+  WorkerThreads: -1
+  Database:
+  {
+    ConnectionString: Server=localhost;Database=s4_patcher;Uid=root;Pwd=;SslMode=None;
+    RunMigration: true
+  }
+  Logging:
+  {
+    Name: patch_manager
+    Directory: logs
+    Level: Debug
+  }
+  StorageDir: .patchManagerStorage/
+}

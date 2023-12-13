@@ -1,0 +1,21 @@
+{
+  Listener: 127.0.0.1:28002
+  WorkerThreads: -1
+  ServerlistTimeout: 60000
+  Database:
+  {
+    ConnectionStrings:
+    {
+      Redis: localhost
+      Auth: Server=localhost;Database=auth;Uid=root;Pwd=1234;SslMode=None;
+    }
+    RunMigration: true
+  }
+  Logging:
+  {
+    Name: auth
+    Directory: logs
+    Level: Debug
+  }
+  DataDir: ../data
+}

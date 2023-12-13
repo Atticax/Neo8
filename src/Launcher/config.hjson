@@ -1,0 +1,12 @@
+{
+  AuthEndpoint: 135.125.202.73:28002
+  GameEndpoint: 135.125.202.73:28005
+  WorkerThreads: -1
+  Logging:
+  {
+    Name: launcher
+    Directory: logs
+    Level: Debug
+  }
+  DataDir: ../data
+}

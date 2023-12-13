@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+  <Import Project="..\GamePluginBase.targets" />
+  <ItemGroup>
+    <PackageReference Include="EmbedIO" Version="2.1.1" />
+  </ItemGroup>
+</Project>

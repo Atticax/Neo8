@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\Netsphere.Server.Auth\Netsphere.Server.Auth.csproj" Private="False" />
+  </ItemGroup>
+  <Import Project="$(MSBuildThisFileDirectory)\WorkaroundSDKIssue1366.targets" />
+</Project>

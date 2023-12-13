@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RuntimeIdentifiers>linux-x64;win-x86;win-x64</RuntimeIdentifiers>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <LangVersion>7.1</LangVersion>
+    <NoWarn>1998</NoWarn>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Netsphere.Database\Netsphere.Database.csproj" />
+    <ProjectReference Include="..\..\Netsphere.Resource\Netsphere.Resource.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.8.0" />
+    <PackageReference Include="Magick.NET-Q16-HDRI-AnyCPU" Version="7.9.0.2" />
+    <!--<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-27124-01" />-->
+    <PackageReference Include="ReactiveProperty" Version="5.4.0" />
+    <PackageReference Include="SharpLzo" Version="0.1.2" />
+    <PackageReference Include="Valit" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="**\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <AvaloniaResource Include="**\*.xaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Assets\*" />
+  </ItemGroup>
+  <!--<ItemGroup>-->
+  <!--<TrimFilesRootFiles Include="mscorlib.dll" />-->
+  <!--<RdXmlFile Include="rd.xml" />-->
+  <!--<LinkerArg Include="-no-pie" />-->
+  <!--</ItemGroup>-->
+  <!--<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">-->
+  <!--<IlcArg Include="&#45;&#45;stacktracedata" />-->
+  <!--</ItemGroup>-->
+  <Import Project="..\..\..\Rules.targets" />
+</Project>

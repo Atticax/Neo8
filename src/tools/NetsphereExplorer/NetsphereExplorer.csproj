@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>NET472</TargetFramework>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BlubLib.GUI" Version="0.1.20" />
+    <PackageReference Include="Costura.Fody" Version="3.1.6" />
+    <PackageReference Include="Fody" Version="3.3.2" />
+    <PackageReference Include="reactiveui" Version="6.5.0" />
+    <PackageReference Include="reactiveui-events-winforms" Version="6.5.0.3" />
+    <PackageReference Include="reactiveui-winforms" Version="6.5.0" />
+    <PackageReference Include="Splat" Version="1.6.2" />
+    <Reference Include="..\..\..\libs\WindowsAPICodePack.dll" />
+    <Reference Include="System.Windows.Forms" />
+    <ProjectReference Include="..\..\Netsphere.Resource\Netsphere.Resource.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+    <Compile Update="Properties\Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
+    <None Include="Properties\Settings.settings" Generator="SettingsSingleFileGenerator" />
+    <None Include="Resources\*" />
+    <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Controls\*.cs" SubType="UserControl" />
+    <Compile Update="Views\*View.cs" SubType="Form" />
+    <Compile Update="Views\CleanerView.Designer.cs" DependentUpon="CleanerView.cs" />
+    <EmbeddedResource Include="Views\CleanerView.resx" DependentUpon="CleanerView.cs" />
+    <Compile Update="Views\FileOperationView.Designer.cs" DependentUpon="FileOperationView.cs" />
+    <EmbeddedResource Include="Views\FileOperationView.resx" DependentUpon="FileOperationView.cs" />
+    <Compile Update="Views\MainView.Designer.cs" DependentUpon="MainView.cs" />
+    <EmbeddedResource Include="Views\MainView.resx" DependentUpon="MainView.cs" />
+    <Compile Update="Views\SimpleInfoView.Designer.cs" DependentUpon="SimpleInfoView.cs" />
+    <EmbeddedResource Include="Views\SimpleInfoView.resx" DependentUpon="SimpleInfoView.cs" />
+    <Compile Update="Views\SimpleProgressView.Designer.cs" DependentUpon="SimpleProgressView.cs" />
+    <EmbeddedResource Include="Views\SimpleProgressView.resx" DependentUpon="SimpleProgressView.cs" />
+  </ItemGroup>
+  <Import Project="..\SharpLzo.targets" />
+  <Import Project="..\..\..\Rules.targets" />
+</Project>

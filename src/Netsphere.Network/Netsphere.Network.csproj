@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BlubLib" Version="0.1.21" />
+    <PackageReference Include="BlubLib.Serialization" Version="0.1.21" />
+    <PackageReference Include="EmbedIO" Version="2.1.1" />
+    <PackageReference Include="SharpLzo" Version="0.1.2" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Netsphere\Netsphere.csproj" />
+    <ProjectReference Include="..\ProudNet\ProudNet.csproj" />
+  </ItemGroup>
+  <Import Project="..\..\Rules.targets" />
+</Project>
