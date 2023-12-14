@@ -1,4 +1,4 @@
-﻿using NeoNetsphere.Database.Game;
+﻿using Netsphere.Database.Game;
 
 namespace RandomShopEditor.Models
 {
@@ -8,7 +8,7 @@ namespace RandomShopEditor.Models
     public string Name { get; set; }
     public byte Color_ { get; set; }
 
-    public Color(Randomshop entity)
+    public Color(RandomShopColorEntity entity)
     {
       Id = (int)entity.Id;
       Name = entity.Name;
