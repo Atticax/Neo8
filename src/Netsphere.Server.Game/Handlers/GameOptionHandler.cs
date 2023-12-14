@@ -470,6 +470,8 @@ namespace Netsphere.Server.Game.Handlers
             return true;
         }
 
+        [Firewall(typeof(MustBeLoggedIn), new object[] { })]
+        [Inline]
         public Task<bool> OnHandle(MessageContext context, ItemUseCapsuleReqMessage message)
         {
             var session = context.GetSession<Session>();
