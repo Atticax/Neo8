@@ -252,8 +252,10 @@ namespace Netsphere.Server.Game.Services
                 effects = null;
                 colors = null;
             }
+
             randomShopPackages = null;
         }
+
         public void LoadCapsules()
         {
             var dto = Deserialize<ItemRewardDto>("xml/ItemBag.xml");

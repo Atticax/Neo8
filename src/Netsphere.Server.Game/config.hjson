@@ -57,6 +57,7 @@
       EnabledEnchant: true
       EnabledNameTag: true
       EnabledRandomShop: true
+      EnableCapsules: true
     }
     ClanOptions:
     {

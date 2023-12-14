@@ -2,6 +2,7 @@
 using Foundatio.Messaging;
 using Logging;
 using Microsoft.Extensions.Options;
+using Netsphere.Common;
 using Netsphere.Common.Configuration;
 using Netsphere.Common.Messaging;
 using Netsphere.Network;
@@ -13,6 +14,7 @@ using Netsphere.Server.Game.Services;
 using ProudNet;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 namespace Netsphere.Server.Game.Handlers
@@ -31,26 +33,30 @@ namespace Netsphere.Server.Game.Handlers
         IHandle<AlchemyDecompositionReqMessage>,
         IHandle<UseInstantItemReqMessage>,
         IHandle<BtcClearReqMessage>,
-        IHandle<PromotionNewYearCardUseReqMessage>
+        IHandle<PromotionNewYearCardUseReqMessage>,
+        IHandle<ItemUseCapsuleReqMessage>
     {
         private readonly ILogger _logger;
         private readonly IMessageBus _messageBus;
         private readonly PlayerManager _playerManager;
         private readonly GameDataService _gameDataService;
         private readonly SystemsOptions _systemsOptions;
+        private readonly NumberExtractorService _numberExtractorService;
 
         public GameOptionHandler(
           ILogger<GameOptionHandler> logger,
           IMessageBus messageBus,
           PlayerManager playerManager,
           GameDataService gameDataService,
-          IOptions<SystemsOptions> systemOptions)
+          IOptions<SystemsOptions> systemOptions,
+          NumberExtractorService numberExtractorService)
         {
             _logger = (ILogger)logger;
             _messageBus = messageBus;
             _playerManager = playerManager;
             _gameDataService = gameDataService;
             _systemsOptions = systemOptions.Value;
+            _numberExtractorService = numberExtractorService;
         }
 
         [Firewall(typeof(MustBeLoggedIn), new object[] { })]
@@ -462,6 +468,124 @@ namespace Netsphere.Server.Game.Handlers
             }));
 
             return true;
+        }
+
+        public Task<bool> OnHandle(MessageContext context, ItemUseCapsuleReqMessage message)
+        {
+            var session = context.GetSession<Session>();
+            var plr = session.Player;
+            var item = plr.Inventory[message.ItemId];
+            var capsuleRewards = _gameDataService.CapsuleRewards;
+
+            var path = Path.Combine(Environment.CurrentDirectory, "test", "removeCapsule.txt");
+
+            item.Durability--;
+
+            if (item.Durability <= 0)
+                plr.Inventory.Remove(item);
+            else
+                session.Send(new ItemUpdateInventoryAckMessage(InventoryAction.Update, item.Map<PlayerItem, ItemDto>()));
+
+            if (!capsuleRewards.ContainsKey(item.ItemNumber.Id))
+            {
+                if (!File.Exists(path))
+                {
+                    using (var sw = File.CreateText(path))
+                        sw.WriteLine($"{item.ItemNumber.Id}");
+                }
+                else
+                {
+                    using (var sw = File.AppendText(path))
+                        sw.WriteLine($"{item.ItemNumber.Id}");
+                }
+                _logger.Error("Unable to find capsule, invalid id {id}", item.ItemNumber.Id);
+                session.Send(new ItemUseCapsuleAckMessage(7));
+
+                return Task.FromResult(true);
+            }
+
+            var capsule = capsuleRewards[item.ItemNumber];
+            var bags = capsule.Bags;
+            var itemsExtracted = new List<CapsuleRewardDto>();
+            foreach (var b in bags)
+            {
+                var extracted = _numberExtractorService.ExtractIndex(b.ItemRewards.Select(x => (int)x.Rate).ToArray());
+                var extractedItem = b.ItemRewards[extracted];
+
+                if (extractedItem != null)
+                {
+                    var capsuleReward = new CapsuleRewardDto
+                    {
+                        ItemNumber = extractedItem.Item.Id,
+                        PeriodType = extractedItem.PeriodType,
+                        PriceType = extractedItem.PriceType,
+                        RewardType = extractedItem.Type,
+                        Effect = extractedItem.Effects.First(),
+                        Period = extractedItem.Value,
+                        Color = extractedItem.Color
+                    };
+
+                    if (capsuleReward.RewardType.Equals(CapsuleRewardType.PEN))
+                    {
+                        capsuleReward.PEN = extractedItem.Value;
+                        plr.PEN += extractedItem.Value;
+                    }
+
+                    else
+                    {
+
+                        if (capsuleReward.ItemNumber.Id == 6000001 && plr.Inventory.Any(x => x.ItemNumber == capsuleReward.ItemNumber))
+                        {
+                            plr.Inventory.First(x => x.ItemNumber == capsuleReward.ItemNumber).Durability++;
+                        }
+                        else
+                        {
+                            ShopItemInfo itemInfo = null;
+                            ShopPrice shopPrice = null;
+                            foreach (var group in _gameDataService.ShopPrices.Values)
+                            {
+                                foreach (var price in group.Prices)
+                                {
+                                    if (price.Period == capsuleReward.Period && price.PeriodType == capsuleReward.PeriodType)
+                                    {
+                                        shopPrice = price;
+                                        foreach (var info in _gameDataService.ShopItems.Values.First(x => x.ItemNumber == extractedItem.Item).ItemInfos)
+                                        {
+                                            foreach (var _price in info.PriceGroup.Prices)
+                                            {
+                                                if (_price == price)
+                                                {
+                                                    itemInfo = info;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        break;
+                                    }
+                                }
+                            }
+
+                            var _item = plr.Inventory.Create(itemInfo, shopPrice, extractedItem.Color, extractedItem.Effects, true);
+
+                            if (_item == null)
+                            {
+                                _logger.Error($"Unable to create item {capsuleReward.ItemNumber.Id}");
+                                session.Send(new ItemUseCapsuleAckMessage(7));
+
+                                return Task.FromResult(true);
+                            }
+                        }
+                    }
+
+                    itemsExtracted.Add(capsuleReward);
+                }
+            }
+
+            plr.SendMoneyUpdate();
+            _logger.Information(plr.Account.Nickname + $" tried to open capsule with id: {item.ItemNumber.Id} \n  ");
+            session.Send(new ItemUseCapsuleAckMessage(itemsExtracted.ToArray(), 3));
+            return Task.FromResult(true);
         }
 
         [Inline]
