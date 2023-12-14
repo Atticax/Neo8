@@ -160,9 +160,10 @@ namespace Netsphere.Server.Game
                             Serializer = x.GetRequiredService<ISerializer>()
                         })
 
-                         
                         .AddTransient<GameMasterCommands>()
-                        .AddCommands
+                        .AddTransient<AdminCommands>()
+                        .AddTransient<GameRuleCommands>()
+                        .AddTransient<AccountCommands>()
                         .AddTransient<Player>()
                         .AddTransient<CharacterManager>()
                         .AddTransient<PlayerBoosterInventory>()
