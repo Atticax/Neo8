@@ -17,16 +17,20 @@ namespace Netsphere.Server.Game.Handlers
     internal class ShopHandler :
         IHandle<ItemBuyItemReqMessage>,
         IHandle<ShoppingBasketActionReqMessage>,
-        IHandle<ShoppingBasketDeleteReqMessage>
+        IHandle<ShoppingBasketDeleteReqMessage>,
+        IHandle<ItemUseCapsuleReqMessage>
     {
         private readonly GameDataService _gameDataService;
         private readonly ILogger _logger;
+        private readonly NumberExtractorService _numberExtractorService;
 
-        public ShopHandler(GameDataService gameDataService, ILogger<ShopHandler> logger)
+        public ShopHandler(GameDataService gameDataService, NumberExtractorService numberExtractorService, ILogger<ShopHandler> logger)
         {
             _gameDataService = gameDataService;
             _logger = logger;
+            _numberExtractorService = numberExtractorService;
         }
+
 
         [Inline]
         public async Task<bool> OnHandle(MessageContext context, ItemBuyItemReqMessage message)
@@ -201,7 +205,7 @@ namespace Netsphere.Server.Game.Handlers
             var itemsExtracted = new List<CapsuleRewardDto>();
             foreach (var b in bags)
             {
-                var extracted = NumberExtractorService.ExtractIndex(b.ItemRewards.Select(x => (int)x.Rate).ToArray());
+                var extracted = _numberExtractorService.ExtractIndex(b.ItemRewards.Select(x => (int)x.Rate).ToArray());
                 var extractedItem = b.ItemRewards[extracted];
 
                 if (extractedItem != null)
@@ -214,7 +218,7 @@ namespace Netsphere.Server.Game.Handlers
                         RewardType = extractedItem.Type,
                         Effect = extractedItem.Effects.First(),
                         Period = extractedItem.Value,
-                        Unk1 = extractedItem.Color
+                        Color = extractedItem.Color
                     };
 
                     if (capsuleReward.RewardType.Equals(CapsuleRewardType.PEN))
@@ -281,4 +285,3 @@ namespace Netsphere.Server.Game.Handlers
         }
     }
 }
-

@@ -44,6 +44,7 @@ namespace Netsphere.Server.Game.Services
         public DecompositionInfo Decomposition { get; private set; }
         public ImmutableDictionary<OptionBtcClear, BtcOptions> Tutorials { get; private set; }
         public ImmutableDictionary<int, RandomShopPackage> RandomShopPackages { get; private set; }
+        public ImmutableDictionary<ItemNumber, CapsuleReward> CapsuleRewards { get; private set; }
 
         public GameDataService(ILogger<GameDataService> logger, DatabaseService databaseService)
         {
@@ -131,6 +132,7 @@ namespace Netsphere.Server.Game.Services
             LoadCombinationInfo();
             LoadDecompositionInfo();
             LoadTutorials();
+            LoadCapsules();
             await LoadShop();
             await LoadRandomShop();
             await LoadLevelRewards();
@@ -251,6 +253,17 @@ namespace Netsphere.Server.Game.Services
                 colors = null;
             }
             randomShopPackages = null;
+        }
+        public void LoadCapsules()
+        {
+            var dto = Deserialize<ItemRewardDto>("xml/ItemBag.xml");
+            CapsuleRewards = Transform().ToImmutableDictionary(x => x.Item, x => x);
+
+            IEnumerable<CapsuleReward> Transform()
+            {
+                foreach (var item in dto.Items)
+                    yield return new CapsuleReward(item);
+            }
         }
     }
 }
