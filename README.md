@@ -1,6 +1,8 @@
 # Season8
 # Edited version of wtfblubs season 8 emu.
-
+# YOU NEED REDIS!!
+# READ ERROR'S CORRECTLY
+# DONT BE DUMB.
 Features :
 
 - Capsules 
