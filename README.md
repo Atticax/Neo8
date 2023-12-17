@@ -3,6 +3,7 @@
 # YOU NEED REDIS!!
 # READ ERROR'S CORRECTLY
 # DONT BE DUMB.
+# I don't provide data files
 Features :
 
 - Capsules 
