@@ -1,5 +1,5 @@
 # Season8
-# Edited version of wtfblubs season 8 emu.
+# Edited version of wtfblubs Season 8 Emu.
 # YOU NEED REDIS!!
 # READ ERROR'S CORRECTLY
 # DONT BE DUMB.
