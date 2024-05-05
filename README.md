@@ -1,3 +1,4 @@
+# thanks to https://github.com/s4archivosxx ! he helped much on this!
 # Season8
 # Edited version of wtfblubs Season 8 Emu.
 # YOU NEED REDIS!!
